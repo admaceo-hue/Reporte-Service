@@ -1,6 +1,7 @@
 package com.mariluz.reportes.client;
 
 import com.mariluz.reportes.dto.SaleResponse;
+import com.mariluz.reportes.exception.MicroserviceConnectionException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
@@ -18,16 +19,18 @@ public class SalesClient {
         this.restClient = RestClient.builder().baseUrl(baseUrl).build();
     }
 
+    
     public List<SaleResponse> obtenerTodasLasVentas(String authHeader) {
         try {
             return restClient
                     .get()
-                    .uri("/todas") 
+                    .uri("/sales/all")
                     .header("Authorization", authHeader)
                     .retrieve()
                     .body(new ParameterizedTypeReference<List<SaleResponse>>() {});
-     } catch (RestClientException e) {
-            throw new com.mariluz.reportes.exception.MicroserviceConnectionException("No se pudo obtener el listado de ventas en Reportes.");
+        } catch (RestClientException e) {
+            throw new MicroserviceConnectionException(
+                "No se pudo obtener el listado de ventas en Reportes.");
         }
     }
 }

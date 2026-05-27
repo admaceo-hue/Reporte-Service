@@ -24,7 +24,7 @@ public class CatalogClient {
         try {
             return restClient
                     .post()
-                    .uri("/products/ids")
+                    .uri("/catalog/products/ids")
                     .header("Authorization", authHeader)
                     .body(content)
                     .retrieve()
