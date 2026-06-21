@@ -2,6 +2,7 @@ package com.mariluz.reportes.config;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
@@ -17,18 +18,22 @@ public class OpenApiConfig {
     @Bean
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
-            .info(new Info().title("API Servicio Reportes").version("v1"))
-            // hace que aparezca el candado y se envie el token en cada request
-            .addSecurityItem(new SecurityRequirement().addList(SCHEME))
-            .components(
-                new Components().addSecuritySchemes(
-                    SCHEME,
-                    new SecurityScheme()
-                        .name(SCHEME)
-                        .type(SecurityScheme.Type.HTTP)
-                        .scheme("bearer")
-                        .bearerFormat("JWT")
-                )
-            );
+                .info(new Info()
+                        .title("API Servicio Reportes")
+                        .version("v1")
+                        .description("Microservicio de reportes - Tienda Mariluz")
+                        .contact(new Contact()
+                                .name(" Maria luz")
+                                .email("contacto@mariluz.cl")))
+                // hace que aparezca el candado y se envie el token en cada request
+                .addSecurityItem(new SecurityRequirement().addList(SCHEME))
+                .components(
+                        new Components().addSecuritySchemes(
+                                SCHEME,
+                                new SecurityScheme()
+                                        .name(SCHEME)
+                                        .type(SecurityScheme.Type.HTTP)
+                                        .scheme("bearer")
+                                        .bearerFormat("JWT")));
     }
 }
